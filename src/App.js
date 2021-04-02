@@ -15,7 +15,9 @@ function App() {
       .orderBy('timestamp', 'desc')
       .onSnapshot((snapshot) => {
         // console.log(snapshot.docs.map((doc) => doc.data().todo));
-        setTodos(snapshot.docs.map((doc) => doc.data().todo));
+        setTodos(
+          snapshot.docs.map((doc) => ({ id: doc.id, todo: doc.data().todo }))
+        );
       });
   }, []);
 
@@ -33,7 +35,7 @@ function App() {
 
   return (
     <div className='App'>
-      <h1>Hello to the Todo React App🚀!!</h1>
+      <h1>Todo React App🚀!!</h1>
 
       <form type='submit'>
         <FormControl>
@@ -53,7 +55,7 @@ function App() {
       </form>
       <ul>
         {todos.map((todo) => (
-          <Todo text={todo} key={todo} />
+          <Todo text={todo} key={todo.id} />
         ))}
       </ul>
     </div>
